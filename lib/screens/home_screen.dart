@@ -39,7 +39,7 @@ class ProfilePage extends StatelessWidget { const ProfilePage({super.key}); @ove
 class GiftScreen extends StatelessWidget { const GiftScreen({super.key}); @override Widget build(BuildContext context) => Scaffold(appBar: AppBar(title: const Text("Quà tặng"), backgroundColor: const Color(0xFF0A0A0A)), backgroundColor: const Color(0xFF0A0A0A), body: const Center(child: Text("Quà tặng và Ưu đãi", style: TextStyle(color: Colors.white, fontSize: 18)))); }
 class CinemaPage extends StatelessWidget { const CinemaPage({super.key}); @override Widget build(BuildContext context) => Scaffold(appBar: AppBar(title: const Text("Hệ thống Rạp"), backgroundColor: const Color(0xFF0A0A0A)), backgroundColor: const Color(0xFF0A0A0A), body: const Center(child: Text("Danh sách Rạp TT CINEMA", style: TextStyle(color: Colors.white, fontSize: 18)))); }
 class PromotionScreen extends StatelessWidget { const PromotionScreen({super.key}); @override Widget build(BuildContext context) => Scaffold(appBar: AppBar(title: const Text("Khuyến mãi"), backgroundColor: const Color(0xFF0A0A0A)), backgroundColor: const Color(0xFF0A0A0A), body: const Center(child: Text("Các chương trình khuyến mãi", style: TextStyle(color: Colors.white, fontSize: 18)))); }
-class BookingScreen extends StatelessWidget { final Map movie; const BookingScreen({super.key, required this.movie}); @override Widget build(BuildContext context) => Scaffold(appBar: AppBar(title: Text("Đặt vé: ${movie["name"]}"), backgroundColor: const Color(0xFF0A0A0A)), backgroundColor: const Color(0xFF0A0A0A), body: const Center(child: Text("Màn hình chọn ghế và thanh toán", style: TextStyle(color: Colors.white, fontSize: 18)))); }
+
 
 // ==========================================
 // 2. MÀN HÌNH CHÍNH (HOME SCREEN)

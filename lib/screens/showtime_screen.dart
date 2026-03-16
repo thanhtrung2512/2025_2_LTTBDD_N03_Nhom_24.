@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'booking_screen.dart';
 
 class ShowtimeScreen extends StatefulWidget {
   final Map movie;
@@ -106,11 +107,19 @@ class _ShowtimeScreenState extends State<ShowtimeScreen> with SingleTickerProvid
       children: times.map<Widget>((timeData) {
         bool isSoldOut = timeData["status"] == "sold_out";
 
-        return InkWell(
+        return GestureDetector( // Đổi InkWell thành GestureDetector để nhận chạm nhạy hơn trên Web
           onTap: isSoldOut ? null : () {
-            // TODO: Chuyển sang màn hình chọn ghế (BookingScreen)
+            // Chuyển trang khi có dữ liệu
+            Navigator.push(
+              context, 
+              MaterialPageRoute(
+                builder: (_) => BookingScreen(
+                  movie: widget.movie, 
+                  timeData: timeData, // Truyền thông tin suất chiếu sang
+                ),
+              )
+            );
           },
-          borderRadius: BorderRadius.circular(8),
           child: Container(
             width: 105,
             decoration: BoxDecoration(
