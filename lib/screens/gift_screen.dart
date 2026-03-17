@@ -6,49 +6,166 @@ class GiftScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Quà tặng"),
+        title: const Text(
+          "Quà tặng",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        centerTitle: true,
         backgroundColor: const Color(0xFFE51937),
         foregroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 500),
-          child: GridView.builder(
-            padding: const EdgeInsets.all(16),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
-              childAspectRatio: 0.8,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 10,
+                ),
+              ],
             ),
-            itemCount: 4,
-            itemBuilder: (context, index) {
-              return Card(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: Container(
-                        color: Colors.red[50],
-                        child: const Icon(Icons.card_giftcard, size: 40, color: Color(0xFFE51937)),
+                    const Text(
+                      "Bán chạy nhất",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Text("Voucher ${100*(index+1)}k", style: const TextStyle(fontWeight: FontWeight.bold)),
-                          const SizedBox(height: 4),
-                          const Text("80.000 đ", style: TextStyle(color: Color(0xFFE51937), fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                    )
+                    const SizedBox(height: 16),
+                    _buildGiftCard(
+                      imagePath: 'assets/images/qt1.jpg',
+                      title: "VÉ SUPER PLEX",
+                      expiry: "Hạn sử dụng | 12 tháng",
+                      price: "150.000 đ",
+                    ),
+                    const SizedBox(height: 16),
+                    _buildGiftCard(
+                      imagePath: 'assets/images/qt2.jpg',
+                      title: "VÉ CHARLOTTE",
+                      expiry: "Hạn sử dụng | 12 tháng",
+                      price: "370.000 đ",
+                    ),
+                    const SizedBox(height: 16),
+                    _buildGiftCard(
+                      imagePath: 'assets/images/qt3.jpg',
+                      title: "VÉ QUÀ TẶNG",
+                      expiry: "Hạn sử dụng | 12 tháng",
+                      price: "100.000 đ",
+                    ),
                   ],
                 ),
-              );
-            },
+              ),
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildGiftCard({
+    required String imagePath,
+    required String title,
+    required String expiry,
+    required String price,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+        border: Border.all(color: Colors.grey.shade200),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Image.asset(
+                imagePath,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: Colors.grey[200],
+                    child: const Icon(Icons.image_not_supported, color: Colors.grey),
+                  );
+                },
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.grey[50],
+              borderRadius: const BorderRadius.vertical(bottom: Radius.circular(12)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        expiry,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE51937),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    price,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
