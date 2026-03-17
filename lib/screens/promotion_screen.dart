@@ -6,52 +6,61 @@ class PromotionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text(
-          "Khuyến mãi",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-        centerTitle: true,
-        backgroundColor: const Color(0xFFE51937),
-        foregroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
+      backgroundColor: const Color(0xFF0A0A0A),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 500),
           child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 10,
-                ),
-              ],
-            ),
-            child: ListView(
-              padding: const EdgeInsets.all(16),
+            color: Colors.white,
+            child: Column(
               children: [
-                _buildPromotionCard(
-                  imagePath: 'assets/images/km1.png',
-                  title: "MUA 1 TẶNG 1 ZALOPAY",
-                  description: "Duy nhất khi dùng Tài khoản trả sau ZaloPay...",
-                ),
-                const SizedBox(height: 16),
-                _buildPromotionCard(
-                  imagePath: 'assets/images/km.jpg',
-                  title: "KHUYẾN MÃI HẤP DẪN",
-                  description: "Ưu đãi đặc biệt cho thành viên TT Cinema...",
+                _buildAppBar(context),
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.all(16),
+                    children: [
+                      _buildPromotionCard(
+                        imagePath: 'assets/images/km1.png',
+                        title: "MUA 1 TẶNG 1 ZALOPAY",
+                        description: "Duy nhất khi dùng Tài khoản trả sau ZaloPay...",
+                      ),
+                      const SizedBox(height: 16),
+                      _buildPromotionCard(
+                        imagePath: 'assets/images/km.jpg',
+                        title: "KHUYẾN MÃI HẤP DẪN",
+                        description: "Ưu đãi đặc biệt cho thành viên TT Cinema...",
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildAppBar(BuildContext context) {
+    return Container(
+      color: const Color(0xFFE51937),
+      padding: const EdgeInsets.only(top: 40, bottom: 8),
+      child: Row(
+        children: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.pop(context),
+          ),
+          const Expanded(
+            child: Center(
+              child: Text(
+                "Khuyến mãi",
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+            ),
+          ),
+          const SizedBox(width: 48),
+        ],
       ),
     );
   }

@@ -107,6 +107,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
               Expanded(
                 child: Container(
+                  width: double.infinity,
                   color: Colors.white,
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.all(24),
@@ -183,6 +184,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
               // --- THANH THANH TOÁN DƯỚI ĐÁY ĐỒNG BỘ ---
               Container(
+                width: double.infinity,
                 padding: const EdgeInsets.all(20),
                 decoration: const BoxDecoration(
                   color: Colors.white,

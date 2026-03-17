@@ -5,6 +5,7 @@ import 'showtime_screen.dart';
 import 'gift_screen.dart';
 import 'cinema_screen.dart';
 import 'promotion_screen.dart';
+import 'group_info_screen.dart';
 
 
 // ==========================================
@@ -296,7 +297,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Icon(Icons.sort, color: Colors.white, size: 28),
+                          GestureDetector(
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const GroupInfoScreen())),
+                            child: const Icon(Icons.sort, color: Colors.white, size: 28),
+                          ),
                           const Spacer(),
                           const SizedBox(width: 10),
                         ],

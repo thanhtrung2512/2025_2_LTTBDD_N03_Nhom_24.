@@ -109,6 +109,7 @@ class _ConcessionScreenState extends State<ConcessionScreen> {
               // --- DANH SÁCH COMBO ---
               Expanded(
                 child: Container(
+                  width: double.infinity,
                   color: Colors.white,
                   child: ListView.builder(
                     padding: const EdgeInsets.all(16),
@@ -212,6 +213,7 @@ class _ConcessionScreenState extends State<ConcessionScreen> {
 
               // --- THANH THANH TOÁN DƯỚI ĐÁY ĐÃ CĂN CHỈNH ---
               Container(
+                width: double.infinity,
                 padding: const EdgeInsets.all(20),
                 decoration: const BoxDecoration(
                   color: Colors.white,

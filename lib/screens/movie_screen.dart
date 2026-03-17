@@ -208,90 +208,91 @@ class _MovieScreenState extends State<MovieScreen>
     double maxWidth = 500.0;
 
     return Scaffold(
-      backgroundColor: darkBg, // Thay đổi nền ngoài cùng thành màu đen
+      backgroundColor: darkBg,
       body: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: maxWidth),
-          child: Column(
-            children: [
-              Container(
-                color: primaryRed,
-                child: SafeArea(
-                  bottom: false,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 8),
-                    child: Row(
+          child: Container(
+            color: bgColor,
+            child: Column(
+              children: [
+                _buildAppBarLocal(),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: bgColor,
+                    ),
+                    child: Column(
                       children: [
-                        IconButton(
-                          icon: const Icon(Icons.arrow_back,
-                              color: Colors.white),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                        const Expanded(
-                          child: Center(
-                            child: Text(
-                              "Phim",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: TabBar(
+                            controller: _tabController,
+                            indicatorColor: Colors.transparent,
+                            labelColor: Colors.black87,
+                            unselectedLabelColor: Colors.grey,
+                            labelStyle: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                            unselectedLabelStyle: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.normal),
+                            tabs: const [
+                              Tab(text: "Phim đang chiếu"),
+                              Tab(text: "Phim sắp chiếu"),
+                            ],
                           ),
                         ),
-                        const SizedBox(width: 48),
+                        const Divider(height: 1, color: Colors.black12),
+                        Expanded(
+                          child: TabBarView(
+                            controller: _tabController,
+                            children: [
+                              _buildMovieList(nowShowingMovies),
+                              _buildMovieList(comingSoonMovies),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAppBarLocal() {
+    return Container(
+      color: primaryRed,
+      child: SafeArea(
+        bottom: false,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          child: Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () => Navigator.pop(context),
               ),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: bgColor,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(24),
-                      topRight: Radius.circular(24),
+              const Expanded(
+                child: Center(
+                  child: Text(
+                    "Phim",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8),
-                        child: TabBar(
-                          controller: _tabController,
-                          indicatorColor: Colors.transparent,
-                          labelColor: Colors.black87,
-                          unselectedLabelColor: Colors.grey,
-                          labelStyle: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                          unselectedLabelStyle: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.normal),
-                          tabs: const [
-                            Tab(text: "Phim đang chiếu"),
-                            Tab(text: "Phim sắp chiếu"),
-                          ],
-                        ),
-                      ),
-                      const Divider(height: 1, color: Colors.black12),
-                      Expanded(
-                        child: TabBarView(
-                          controller: _tabController,
-                          children: [
-                            _buildMovieList(nowShowingMovies),
-                            _buildMovieList(comingSoonMovies),
-                          ],
-                        ),
-                      ),
-                    ],
                   ),
                 ),
               ),
+              const SizedBox(width: 48),
             ],
           ),
         ),
       ),
     );
   }
-  }
+}

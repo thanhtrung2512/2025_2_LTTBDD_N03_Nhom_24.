@@ -89,24 +89,16 @@ class _CinemaScreenState extends State<CinemaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: _buildAppBar(),
+      backgroundColor: const Color(0xFF0A0A0A),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 500),
           child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 10,
-                ),
-              ],
-            ),
+            color: Colors.white,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                _buildAppBarLocal(),
                 _buildDatePicker(),
                 _buildRegionFilter(),
                 Expanded(
@@ -120,23 +112,31 @@ class _CinemaScreenState extends State<CinemaScreen> {
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
-    return AppBar(
-      backgroundColor: Colors.white,
-      elevation: 0,
-      centerTitle: true,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 20),
-        onPressed: () => Navigator.pop(context),
-      ),
-      title: Text(
-        widget.movie?["name"]?.toString().toUpperCase() ?? "Hệ thống Rạp",
-        style: const TextStyle(
-          color: Colors.black,
-          fontSize: 14,
-          fontWeight: FontWeight.w900,
-          letterSpacing: 2.0,
-        ),
+  Widget _buildAppBarLocal() {
+    return Container(
+      padding: const EdgeInsets.only(top: 40, bottom: 8),
+      color: Colors.white,
+      child: Row(
+        children: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 20),
+            onPressed: () => Navigator.pop(context),
+          ),
+          Expanded(
+            child: Center(
+              child: Text(
+                widget.movie?["name"]?.toString().toUpperCase() ?? "Hệ thống Rạp",
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 2.0,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 48),
+        ],
       ),
     );
   }
