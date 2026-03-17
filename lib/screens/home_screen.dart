@@ -298,23 +298,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           const Icon(Icons.sort, color: Colors.white, size: 28),
                           const Spacer(),
-                          Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const TicketPage())),
-                                child: const Icon(Icons.confirmation_num_outlined, color: Colors.white, size: 24),
-                              ),
-                              const SizedBox(width: 20),
-                              GestureDetector(
-                                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfilePage())),
-                                child: Container(
-                                  width: 30, height: 30,
-                                  decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 1.5)),
-                                  child: const Icon(Icons.person, color: Colors.white, size: 18),
-                                ),
-                              ),
-                            ],
-                          )
+                          const SizedBox(width: 10),
                         ],
                       ),
                     ),
