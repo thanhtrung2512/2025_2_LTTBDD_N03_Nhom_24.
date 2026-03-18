@@ -1,4 +1,4 @@
-# Ứng dụng đặt vé xem phim
+# Ứng dụng khám phá và đánh giá trải nghiệm xem phim
 
 Thành Viên Nhóm:
 
