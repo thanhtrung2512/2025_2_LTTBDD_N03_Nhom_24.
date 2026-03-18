@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'movie_screen.dart';
-import 'showtime_screen.dart';
-import 'gift_screen.dart';
+import 'movie_details_screen.dart';
 import 'cinema_screen.dart';
-import 'promotion_screen.dart';
 import 'group_info_screen.dart';
+import 'favorite_movies_screen.dart';
+import 'my_reviews_screen.dart';
+import '../app_state.dart';
 
 
 // ==========================================
@@ -104,8 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPageChanged: (i) => setState(() => promoIndex = i),
               itemBuilder: (context, index) {
                 int realPromoIndex = index % promoImages.length;
-                return GestureDetector(
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PromotionScreen())),
+                return Container(
                   child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 6), 
                     decoration: BoxDecoration(
@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // --- WIDGET: THẺ PHIM ---
   Widget movieCard(Map movie) {
     return GestureDetector(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ShowtimeScreen(movie: movie))),
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => MovieDetailsScreen(movie: movie))),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
         decoration: BoxDecoration(
@@ -216,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     alignment: Alignment.center,
                     child: InkWell(
                       // ĐÃ SỬA LỖI Ở DÒNG NÀY: Dùng `movie: movie` thay vì `selectedMovie: movie`
-                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ShowtimeScreen(movie: movie))),
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => MovieDetailsScreen(movie: movie))),
                       borderRadius: BorderRadius.circular(30), 
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 32),
@@ -226,9 +226,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           border: Border.all(color: Colors.white.withValues(alpha: 0.1), width: 0.5),
                           boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.5), blurRadius: 8, offset: const Offset(0, 4))]
                         ),
-                        child: const Text(
-                          "ĐẶT VÉ", 
-                          style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600, letterSpacing: 2.0),
+                        child: Text(
+                          AppState().translate("CHI TIẾT", "DETAILS"), 
+                          style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600, letterSpacing: 2.0),
                         ),
                       ),
                     ),
@@ -302,6 +302,28 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: const Icon(Icons.sort, color: Colors.white, size: 28),
                           ),
                           const Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                AppState().toggleLanguage();
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: rubyRed,
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(color: Colors.white24),
+                                boxShadow: [
+                                  BoxShadow(color: Colors.black.withOpacity(0.3), blurRadius: 4, offset: const Offset(0, 2))
+                                ],
+                              ),
+                              child: Text(
+                                AppState().isEnglish ? "EN" : "VI",
+                                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                              ),
+                            ),
+                          ),
                           const SizedBox(width: 10),
                         ],
                       ),
@@ -368,7 +390,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
 
-              // LỚP 3: THANH BOTTOM NAVIGATION
               Positioned(
                 bottom: 20,
                 left: 16,
@@ -386,8 +407,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      _buildNavItem(Icons.local_movies_outlined, "Phim", const MovieScreen()), 
-                      _buildNavItem(Icons.card_giftcard, "Quà tặng", const GiftScreen()),
+                      _buildNavItem(Icons.local_movies_outlined, AppState().translate("Phim", "Movies"), MovieScreen()), 
+                      _buildNavItem(Icons.favorite_outline, AppState().translate("Yêu thích", "Favorite"), FavoriteMoviesScreen()),
                       
                       // NÚT TT CINEMA
                       GestureDetector(
@@ -410,15 +431,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: const Icon(Icons.movie_filter, color: Colors.white, size: 20), 
                             ),
                             const SizedBox(height: 4),
-                            const Text(
+                            Text(
                               "TT CINEMA", 
-                              style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)
+                              style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)
                             )
                           ],
                         ),
                       ),
-                      _buildNavItem(Icons.storefront_outlined, "Rạp", const CinemaScreen()),
-                      _buildNavItem(Icons.local_offer_outlined, "Khuyến mãi", const PromotionScreen()),
+                      _buildNavItem(Icons.storefront_outlined, AppState().translate("Rạp", "Cinema"), CinemaScreen()),
+                      _buildNavItem(Icons.rate_review_outlined, AppState().translate("Đánh giá", "Review"), MyReviewsScreen()),
                     ],
                   ),
                 ),

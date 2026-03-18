@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'showtime_screen.dart'; // Import màn hình Lịch Chiếu thật
+import 'movie_details_screen.dart';
+import '../app_state.dart';
 
 class MovieScreen extends StatefulWidget {
   const MovieScreen({super.key});
@@ -163,21 +164,25 @@ class _MovieScreenState extends State<MovieScreen>
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 12),
-              Text("Thời lượng : ${movie["duration"]}",
-                  style: const TextStyle(color: Colors.black87, fontSize: 14)),
-              const SizedBox(height: 8),
-              Text("Khởi chiếu : ${movie["date"]}",
-                  style: const TextStyle(color: Colors.black87, fontSize: 14)),
-              const SizedBox(height: 8),
-              Text("Thể loại : ${movie["type"]}",
-                  style: const TextStyle(color: Colors.black87, fontSize: 14)),
-              const SizedBox(height: 16),
+              Text("${AppState().translate("Thời lượng", "Duration")} : ${movie["duration"].toString().replaceAll("Phút", AppState().translate("Phút", "Mins"))}",
+                  style: const TextStyle(color: Colors.black54, fontSize: 12)),
+              const SizedBox(height: 4),
+              Text("${AppState().translate("Khởi chiếu", "Release")} : ${movie["date"]}",
+                  style: const TextStyle(color: Colors.black54, fontSize: 12)),
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                   Text("${AppState().translate("Thể loại", "Genre")} : ${movie["type"]}",
+                      style: const TextStyle(color: Colors.black54, fontSize: 12)),
+                ],
+              ),
+              SizedBox(height: 16),
               InkWell(
                 onTap: () {
                  Navigator.push(
                    context,
                        MaterialPageRoute(
-                   builder: (_) => ShowtimeScreen(movie: movie))); // ĐÃ SỬA CHUẨN
+                   builder: (_) => MovieDetailsScreen(movie: movie)));
                 },
                 borderRadius: BorderRadius.circular(24),
                 child: Container(
@@ -187,9 +192,9 @@ class _MovieScreenState extends State<MovieScreen>
                     color: primaryRed,
                     borderRadius: BorderRadius.circular(24),
                   ),
-                  child: const Text(
-                    "Mua vé ngay",
-                    style: TextStyle(
+                  child: Text(
+                    AppState().translate("Xem chi tiết", "Details"),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -207,59 +212,64 @@ class _MovieScreenState extends State<MovieScreen>
   Widget build(BuildContext context) {
     double maxWidth = 500.0;
 
-    return Scaffold(
-      backgroundColor: darkBg,
-      body: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: maxWidth),
-          child: Container(
-            color: bgColor,
-            child: Column(
-              children: [
-                _buildAppBarLocal(),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: bgColor,
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8),
-                          child: TabBar(
-                            controller: _tabController,
-                            indicatorColor: Colors.transparent,
-                            labelColor: Colors.black87,
-                            unselectedLabelColor: Colors.grey,
-                            labelStyle: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                            unselectedLabelStyle: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.normal),
-                            tabs: const [
-                              Tab(text: "Phim đang chiếu"),
-                              Tab(text: "Phim sắp chiếu"),
-                            ],
-                          ),
+    return ListenableBuilder(
+      listenable: AppState(),
+      builder: (context, _) {
+        return Scaffold(
+          backgroundColor: darkBg,
+          body: Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: maxWidth),
+              child: Container(
+                color: bgColor,
+                child: Column(
+                  children: [
+                    _buildAppBarLocal(),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: bgColor,
                         ),
-                        const Divider(height: 1, color: Colors.black12),
-                        Expanded(
-                          child: TabBarView(
-                            controller: _tabController,
-                            children: [
-                              _buildMovieList(nowShowingMovies),
-                              _buildMovieList(comingSoonMovies),
-                            ],
-                          ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8),
+                              child: TabBar(
+                                controller: _tabController,
+                                indicatorColor: Colors.transparent,
+                                labelColor: Colors.black87,
+                                unselectedLabelColor: Colors.grey,
+                                labelStyle: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                                unselectedLabelStyle: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.normal),
+                                tabs: [
+                                  Tab(text: AppState().translate("Phim đang chiếu", "Now Showing")),
+                                  Tab(text: AppState().translate("Phim sắp chiếu", "Coming Soon")),
+                                ],
+                              ),
+                            ),
+                            const Divider(height: 1, color: Colors.black12),
+                            Expanded(
+                              child: TabBarView(
+                                controller: _tabController,
+                                children: [
+                                  _buildMovieList(nowShowingMovies),
+                                  _buildMovieList(comingSoonMovies),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -276,11 +286,11 @@ class _MovieScreenState extends State<MovieScreen>
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () => Navigator.pop(context),
               ),
-              const Expanded(
+              Expanded(
                 child: Center(
                   child: Text(
-                    "Phim",
-                    style: TextStyle(
+                    AppState().translate("Phim", "Movies"),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
